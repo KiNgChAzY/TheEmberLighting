@@ -1,58 +1,90 @@
-# The Ember Lighting
+# Quick Access - Password Assisted Redirect
 
-Premium holiday lighting services in Bluffton, SC and Hilton Head Island.
+A simple, lightweight web application that helps users quickly access password-protected Squarespace sites.
 
-## About
+## Features
 
-The Ember Lighting was started in the Bluffton, SC area to spread holiday joy with lighting. We are a lighting business that puts up premium light for the best price. Started by two South Carolina football players trying to brighten up their community.
+- **Auto-fill attempt**: Attempts to automatically fill the password field on the target site
+- **Graceful fallback**: If auto-fill is blocked (due to browser security), copies password to clipboard and redirects
+- **Clean UI**: Modern, professional design with loading states
+- **Mobile responsive**: Works on all devices
 
-## Services
+## How It Works
 
-### EMB-001: The Magical Glow
-Our most sought-after package with up to 175' of C9 lights, accent lighting, and dusk-to-dawn timer.
+1. **Attempt 1**: Tries to load the target site in an iframe and auto-fill the password
+2. **Attempt 2**: If iframe approach is blocked by CORS, falls back to:
+   - Copying password to clipboard automatically
+   - Showing simple paste instructions
+   - Redirecting to the target site
 
-### EMB-002: The Enchanted Estate
-The ultimate, breathtaking display with comprehensive lighting, canopy wraps, and professional installation.
+## Security Notes
 
-## Technology Stack
+⚠️ **IMPORTANT**: The password is hardcoded in the client-side JavaScript. This means:
+- The password will be visible to anyone who views the source code
+- The password will be publicly visible when deployed to GitHub/Netlify
+- This approach is suitable for:
+  - Temporary passwords that will be changed regularly
+  - Internal testing environments
+  - Non-sensitive content
 
-- **Framework**: Next.js 14 (React 18)
-- **Styling**: Tailwind CSS
-- **Language**: TypeScript
-- **Deployment**: Netlify
-- **Hosting**: Global CDN
+**Production Recommendation**: Change the target site's password regularly or implement proper authentication.
 
-## Getting Started
+## Deployment to Netlify
+
+### Option 1: Deploy via GitHub
+
+1. Push this repository to GitHub
+2. Go to [Netlify](https://www.netlify.com/)
+3. Click "Add new site" → "Import an existing project"
+4. Connect your GitHub repository
+5. Netlify will automatically detect the `index.html` file
+6. Click "Deploy site"
+
+### Option 2: Deploy via Netlify CLI
 
 ```bash
-# Install dependencies
-npm install
+# Install Netlify CLI
+npm install -g netlify-cli
 
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
+# Deploy
+netlify deploy --prod
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+### Option 3: Drag & Drop
 
-## Deployment
+1. Go to [Netlify](https://www.netlify.com/)
+2. Drag and drop the folder containing `index.html` onto the deployment area
+3. Your site will be live in seconds!
 
-This project is configured for Netlify deployment. Simply connect your GitHub repository to Netlify, and it will automatically deploy on every push to main.
+## Customization
 
-## Contact
+To change the target URL or password, edit `index.html`:
 
-- **Location**: 1 Masters Court, Hilton Head Island, SC 29928
-- **Email**: theemberlighting@gmail.com
-- **Phone**: (513) 460-4244
+```javascript
+const TARGET_URL = 'https://your-site.squarespace.com';
+const PASSWORD = 'your-password';
+```
 
-## Security
+## Browser Compatibility
 
-- No sensitive data in frontend code
-- Environment variables properly secured
-- Production-ready build configuration
-- XSS and CSRF protection included
+Works on all modern browsers:
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+
+## Troubleshooting
+
+**Issue**: Password not auto-filling
+- **Solution**: This is expected for most Squarespace sites due to browser security. Use the clipboard fallback method.
+
+**Issue**: Clipboard not copying on mobile
+- **Solution**: Tap the password shown on screen and paste manually.
+
+## License
+
+MIT
+
+## Contributing
+
+Feel free to submit issues or pull requests!
+
