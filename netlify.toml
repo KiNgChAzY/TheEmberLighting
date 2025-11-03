@@ -1,6 +1,6 @@
 [build]
-# No build command needed for static HTML site
-# Netlify will simply publish the files
+# Static HTML site - uses no-op build script from package.json
+command = "npm run build"
 publish = "."
 
 # Optional: Add cache headers for better performance
