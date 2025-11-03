@@ -107,6 +107,29 @@
             font-size: 16px;
             word-break: break-all;
         }
+
+        .go-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .go-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+        }
+
+        .go-button:active {
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -123,6 +146,7 @@
                 <p style="margin-top: 10px;"><strong>Windows:</strong> Ctrl + V</p>
                 <p><strong>Mac:</strong> Cmd + V</p>
                 <div class="password-display" id="passwordDisplay"></div>
+                <button class="go-button" onclick="window.open('https://yellow-antelope-dtlb.squarespace.com', '_blank')">Go to Site →</button>
             </div>
         </div>
     </div>
@@ -163,10 +187,6 @@
                     updateStatus('Unable to copy to clipboard automatically', 'error');
                 });
 
-                // Redirect after showing instructions
-                setTimeout(() => {
-                    window.location.href = TARGET_URL;
-                }, 2000);
             }
 
             function attemptAutoFill() {
@@ -225,13 +245,6 @@
                 }
             }, TIMEOUT);
 
-            // Try immediate redirect (some sites allow this)
-            setTimeout(() => {
-                if (!fallbackUsed) {
-                    updateStatus('Redirecting...', 'loading');
-                    window.location.href = TARGET_URL;
-                }
-            }, 500);
         })();
     </script>
 </body>
